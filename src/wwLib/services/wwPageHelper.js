@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import { getKeyValue } from 'lodash';
+import { get } from 'lodash-es';
+import { convertPathToRouterFormat } from '@/_common/helpers/urlParametersParsing';
 
 export default {
     /**
@@ -40,10 +41,10 @@ function generateTmpRouter() {
     for (const page of wwLib.wwWebsiteData.getPages()) {
         Object.keys(page.paths).forEach(lang => {
             if (page.cmsDataSetPath) {
-                const data = getKeyValue(wwLib.$store.getters['data/getCollections'], page.cmsDataSetPath);
+                const data = get(wwLib.$store.getters['data/getCollections'], page.cmsDataSetPath);
                 data.forEach((data, index) => {
                     const slugPath = page.paths[lang].match(/{{__wwPage\.data\.(\w+)}}/)[1];
-                    const path = getKeyValue(data, slugPath)
+                    const path = get(data, slugPath)
                         .toLowerCase()
                         .replace(/[^a-z0-9\\_\-\/]+/g, '_');
                     routes.push({
@@ -54,10 +55,7 @@ function generateTmpRouter() {
             } else {
                 routes.push({
                     name: `page_${page.id}_${lang}`,
-                    path:
-                        (lang === 'default' ? '' : '/' + lang) +
-                        '/' +
-                        page.paths[lang].replace(/{{([\w]+)\|([^/]+)?}}/g, ':$1'),
+                    path: (lang === 'default' ? '' : '/' + lang) + '/' + convertPathToRouterFormat(page.paths[lang]),
                 });
             }
         });

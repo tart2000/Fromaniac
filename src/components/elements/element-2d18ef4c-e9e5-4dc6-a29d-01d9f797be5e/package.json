@@ -1,14 +1,1 @@
-{
-    "name": "ww-input-multiselect",
-    "version": "3.1.0",
-    "scripts": {
-        "build": "weweb build",
-        "serve": "weweb serve"
-    },
-    "devDependencies": {
-        "@weweb/cli": "latest"
-    },
-    "dependencies": {
-        "@vueform/multiselect": "2.6.2"
-    }
-}
+{"name":"ww-input-multiselect","version":"3.1.0","scripts":{"build":"weweb build","serve":"weweb serve"},"devDependencies":{},"dependencies":{"@vueform/multiselect":"2.6.2"}}

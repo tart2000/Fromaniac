@@ -1,5 +1,5 @@
 import { computed, unref } from 'vue';
-import { get } from 'lodash';
+import { get } from 'lodash-es';
 
 const allScreenMedia = computed(() => getAllScreenMedia());
 const currentActiveScreens = computed(() => {
@@ -54,7 +54,7 @@ export function getComponentRawProperty({
         data = layers?.[libraryComponentId]?.childrenData?.value?.[data?.uid];
     }
 
-    const defaultAppliedClassesIds = data?._state?.classes?.default || [];
+    const defaultAppliedClassesIds = Array.isArray(data?._state?.classes?.default) ? data._state.classes.default : [];
     if (!propertyConfiguration.states && !propertyConfiguration.responsive) {
         const path = concatenatePath([prefix, prefix === '_state' ? '' : 'default', suffix]);
         if (useClasses) {
